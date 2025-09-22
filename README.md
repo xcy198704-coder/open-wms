@@ -30,7 +30,7 @@
 
 # 平台简介
 
-> 易软通openWMS是采用RuoYi-Vue-Plus后端Java框架，采用采用Vue3 + VueX + Vue-Router + Element Plus + Pinia + TypeScript + Axios + Vite为前端框架，前后端均重新做了调整开发，不兼容原框架。
+> 易软通openWMS是采用RuoYi-Vue-Plus作为后端Java框架，已做调整不兼容原框架；前端采用Vue3 + VueX + Vue-Router + Element Plus + Pinia + TypeScript + Axios + Vite为前端框架。
 
 > 项目代码、文档均开源免费可商用 遵循开源协议在项目中保留开源协议文件即可
 
