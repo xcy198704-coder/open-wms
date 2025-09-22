@@ -821,8 +821,8 @@
 ![输入图片说明](images/inv-images/22c7d080e1c1d5f0c737b0dac950b74.png)|![输入图片说明](images/inv-images/1de21a46538423985a8ce438e2fc9d7.png)
 ![输入图片说明](images/inv-images/60427a812446239f69520ac91ec539a.png)|![输入图片说明](images/inv-images/8ae68c181b998ab6bd415b700ae6fde.png)
 ![输入图片说明](images/inv-images/9d4b3158c2e38472b7f2089106965e0.png)|![输入图片说明](images/inv-images/e7a8da92bbe40f5ebd8d41d2b7d79a5.png)
-## 系统工具
 
+## 系统工具
 |                                                                                            |                                                                                            |
 |--------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
 ![输入图片说明](images/tool-images/136e2fd28ce5c546ede2f47535e798f.png)|![输入图片说明](images/tool-images/4d67e358fe52f3ceb0296f6ce5a1f7d.png)
@@ -830,6 +830,16 @@
 ![输入图片说明](images/tool-images/8590c1103e750563b8880abce6fd25e.png)|![输入图片说明](images/tool-images/9fc6e4f23a8251072394ddb621b59c1.png)
 ![输入图片说明](images/tool-images/a81c51823061ddbbd918c1446fb102f.png)|![输入图片说明](images/tool-images/b86cf1b29f049c8176d1fa91d0aad89.png)
 ![输入图片说明](images/tool-images/b9331e8183111d7bdee0b2a0fd555d8.png)|![输入图片说明](images/tool-images/cf5ca4eac7d9130ac139f45f3398af8.png)
+
+## PDA App端
+|                                                                                            |                                                                                            |
+|--------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
+![输入图片说明](images/app-images/app1.jpg)|![输入图片说明](images/app-images/app2.jpg)
+![输入图片说明](images/app-images/app3.jpg)|![输入图片说明](images/app-images/app4.jpg)
+![输入图片说明](images/app-images/app5.jpg)|![输入图片说明](images/app-images/app6.jpg)
+![输入图片说明](images/app-images/app7.jpg)|![输入图片说明](images/app-images/app8.jpg)
+![输入图片说明](images/app-images/app9.jpg)|![输入图片说明](images/app-images/app10.jpg)
+
 
 # 企业版WMS链接地址：[https://www.wms.kim/enterprise-wms](https://www.wms.kim/enterprise-wms/)
 
