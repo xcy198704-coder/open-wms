@@ -16,7 +16,7 @@
 
 [官网](https://www.wms.kim/) |
 [在线体验](http://open.wms.kim) |
-[帮助文档](https://www.wms.kim/) |
+[帮助文档](https://www.yuque.com/xietianbao/xc91gm) |
 [技术社区](https://gitee.com/yiruantong/open-wms/issues)
 
 [comment]: <> ([宽屏预览]&#40;https://gitee.com/yiruantong/open-wms/blob/master/README.md&#41;)
@@ -45,6 +45,9 @@
 ## PC端演示地址
 > WMS系统: http://open.wms.kim <br/>
 > 账号/密码：请点击star后，获取作者账号密码 <br/>
+
+## 帮助文档
+> 易软通openWMS帮助文档: https://www.yuque.com/xietianbao/xc91gm <br/>
 
 # 系统采用的技术栈
 
