@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![帝鲸logo](logo.png)
+![易软通logo](logo.png)
 
 [![码云Gitee](https://gitee.com/yiruantong/open-wms/badge/star.svg?theme=blue)](https://gitee.com/yiruantong/open-wms)
 [![GitHub](https://img.shields.io/github/stars/yiruantong/open-wms.svg?style=social&label=Stars)](https://gitee.com/yiruantong/open-wms)
@@ -20,15 +20,15 @@
 [技术社区](https://gitee.com/yiruantong/open-wms/issues)
 
 [comment]: <> ([宽屏预览]&#40;https://gitee.com/yiruantong/open-wms/blob/master/README.md&#41;)
-
 </div>
+
 <div align="center" >
 <a href="https://gitee.com/yiruantong/open-wms/blob/master/README.md">宽屏预览</a>
 </div>
 
 - - -
 
-# 平台简介
+# 易软通开源免费openWMS系统简介
 
 > 易软通openWMS是采用RuoYi-Vue-Plus作为后端Java框架，已做调整不兼容原框架；前端采用Vue3 + VueX + Vue-Router + Element Plus + Pinia + TypeScript + Axios + Vite为前端框架。
 
