@@ -84,13 +84,13 @@ spring:
 spring.data:
   redis:
     # 地址
-    host: 139.224.226.81
+    host: 127.0.0.1
     # 端口，默认为6379
     port: 6379
     # 数据库索引
-    database: 15
+    database: 0
     # 密码(如没有密码请注释掉)
-    password: redis123
+    password: 123456
     # 连接超时时间
     timeout: 10s
     # 是否开启ssl
@@ -99,12 +99,12 @@ spring.data:
 mongo-plus:
   data:
     mongodb:
-      host: 123.57.145.194   #ip
+      host: 127.0.0.1   #ip
       port: 27017   #端口
-      database: wms    #数据库名
+      database: yrt-open-wms    #数据库名
       username: wms    #用户名，没有可不填
-      password: wms#yrt123    #密码，同上
-      authenticationDatabase: wms     #验证数据库
+      password: 123456    #密码，同上
+      authenticationDatabase: yrt-open-wms     #验证数据库
       connectTimeoutMS: 50000   #在超时之前等待连接打开的最长时间（以毫秒为单位）
 redisson:
   # redis key前缀
@@ -136,11 +136,11 @@ mail:
   # 是否需要用户名密码验证
   auth: true
   # 发送方，遵循RFC-822标准
-  from: 53901784@qq.com
+  from: 1@qq.com
   # 用户名（注意：如果使用foxmail邮箱，此处user为qq号）
-  user: 53901784@qq.com
+  user: 1@qq.com
   # 密码（注意，某些邮箱需要为SMTP服务单独设置密码，详情查看相关帮助）
-  pass: netmearoxsgebgid
+  pass: 123456
   # 使用 STARTTLS安全连接，STARTTLS是对纯文本通信协议的扩展。
   starttlsEnable: true
   # 使用SSL安全连接
@@ -174,7 +174,7 @@ sms:
       access-key-id: xxxxx
       # 称为accessSecret有些称之为apiSecret
       access-key-secret: xxxxx
-      signature: 宏图工业
+      signature: xxxxx
       region-id: cn-hangzhou
     config2:
       # 框架定义的厂商名称标识，标定此配置是哪个厂商，详细请看厂商标识介绍部分
@@ -183,12 +183,12 @@ sms:
       access-key-id: xxxxx
       # 称为accessSecret有些称之为apiSecret
       access-key-secret: xxxxx
-      signature: 中远海运
+      signature: xxxxx
       region-id: cn-hangzhou
 
 --- # rabbitmq消息队列 前段页面访问地址：http://139.224.226.81:15672/ 账号：rabbit，密码：123456
 spring.rabbitmq:
-  host: 139.224.226.81 # 主机名
+  host: 127.0.0.1 # 主机名
   port: 5672 # 端口
   virtual-host: / # 虚拟主机（用户消息隔离）
   username: rabbit # 用户名
