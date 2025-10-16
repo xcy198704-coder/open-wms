@@ -84,7 +84,7 @@ public class ReturnAuditingCmp extends NodeComponent implements IInventoryBaseSe
     }).toList();
     // 分拣库存
     HolderSourceTypeEnum holderSourceTypeEnum = HolderSourceTypeEnum.RETURN_ORDER;
-    if (returnInfo.getOrderType().equals(HolderSourceTypeEnum.QUALITY_INSPECTION_RETURN.getName())) {
+    if (ObjectUtil.isNotNull(returnInfo.getOrderType()) && returnInfo.getOrderType().equals(HolderSourceTypeEnum.QUALITY_INSPECTION_RETURN.getName())) {
       holderSourceTypeEnum = HolderSourceTypeEnum.QUALITY_INSPECTION_RETURN;
     }
     var sortingResult = inventoryCommonService.sorting(commonMainDto, commonDetailDtoList, holderSourceTypeEnum);
@@ -146,7 +146,7 @@ public class ReturnAuditingCmp extends NodeComponent implements IInventoryBaseSe
     InReturn inReturn = inReturnService.getById(detailList.get(0).getMainId());
     for (var detail : detailList) {
       HolderSourceTypeEnum holderSourceTypeEnum = HolderSourceTypeEnum.RETURN_ORDER;
-      if (inReturn.getOrderType().equals(HolderSourceTypeEnum.QUALITY_INSPECTION_RETURN.getName())) {
+      if (ObjectUtil.isNotNull(inReturn.getOrderType()) && inReturn.getOrderType().equals(HolderSourceTypeEnum.QUALITY_INSPECTION_RETURN.getName())) {
         holderSourceTypeEnum = HolderSourceTypeEnum.QUALITY_INSPECTION_RETURN;
       }
 

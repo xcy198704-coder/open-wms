@@ -177,6 +177,30 @@ public enum HolderSourceTypeEnum {
    * 头程仓库出库
    */
   FREIGHT_ORDER_STORAGE_OUT((byte) 41, "头程仓库出库"),
+  /**
+   * TOC销售单
+   */
+  SALE_ORDER_TOC((byte) 42, "TOC销售单"),
+  /**
+   * 生产加工出库
+   */
+  MANUFACTURING_OUT((byte) 43, "生产加工出库"),
+  /**
+   * 其他出库单
+   */
+  STORAGE_OUTER_CODE((byte) 44, "其他出库单"),
+  /**
+   * 调拨出库
+   */
+  ALLOCATE_OUT((byte) 45, "调拨出库"),
+  /**
+   * 领料出库
+   */
+  MATERIAL_REQUISITION_OUT((byte) 46, "领料出库"),
+  /**
+   * 销售出库
+   */
+  SALE_OUT((byte) 47, "销售出库"),
   ;
 
 

@@ -16,6 +16,7 @@ import com.yiruantong.system.mapper.permission.SysDeptMapper;
 import com.yiruantong.system.mapper.permission.SysRoleMapper;
 import com.yiruantong.system.mapper.permission.SysUserMapper;
 import com.yiruantong.system.service.permission.ISysDeptService;
+import com.yiruantong.system.service.permission.ISysUserService;
 import lombok.RequiredArgsConstructor;
 import com.yiruantong.common.core.constant.CacheNames;
 import com.yiruantong.common.core.constant.UserConstants;
@@ -33,6 +34,7 @@ import com.yiruantong.common.satoken.utils.LoginHelper;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,6 +52,8 @@ public class SysDeptServiceImpl extends ServiceImplPlus<SysDeptMapper, SysDept, 
   private final SysDeptMapper baseMapper;
   private final SysRoleMapper roleMapper;
   private final SysUserMapper userMapper;
+  private final ISysUserService sysUserService;
+
 
   /**
    * 分页查询前事件
@@ -355,6 +359,31 @@ public class SysDeptServiceImpl extends ServiceImplPlus<SysDeptMapper, SysDept, 
     return this.getOnly(sysDeptLambdaQueryWrapper);
   }
   //#endregion
+
+  /**
+   * 删除前事件
+   *
+   * @param Ids
+   * @return
+   */
+  @Transactional(rollbackFor = Exception.class)
+  @Override
+  public int deleteByIds(Long[] Ids) {
+    for (Long id : Ids) {
+      // 查询当前部门信息
+      SysDept sysDept = this.getById(id);
+
+      // 查询当前部门下的用户数据
+      LambdaQueryWrapper<SysUser> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+      lambdaQueryWrapper.eq(SysUser::getDeptName, sysDept.getDeptName());
+      var coreList = sysUserService.selectList(lambdaQueryWrapper);
+      if (!coreList.isEmpty()) {
+        throw new ServiceException("当前部门【" + sysDept.getDeptName() + "】下存在用户，不允许删除！");
+      }
+    }
+    // 执行删除
+    return this.deleteByIds(Ids);
+  }
 
 
 }

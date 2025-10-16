@@ -48,3 +48,9 @@ nbdist/
 .flattened-pom.xml
 /.git.zip
 /logs
+
+######################################################################
+# Environment Variables
+# 忽略包含敏感信息的环境变量文件
+.env
+.env.local
