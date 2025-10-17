@@ -372,6 +372,10 @@ public class SysDeptServiceImpl extends ServiceImplPlus<SysDeptMapper, SysDept, 
     for (Long id : Ids) {
       // 查询当前部门信息
       SysDept sysDept = this.getById(id);
+      // 如果部门不存在，跳过本次循环
+      if (ObjectUtil.isNull(sysDept)) {
+        continue;
+      }
 
       // 查询当前部门下的用户数据
       LambdaQueryWrapper<SysUser> lambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -381,8 +385,8 @@ public class SysDeptServiceImpl extends ServiceImplPlus<SysDeptMapper, SysDept, 
         throw new ServiceException("当前部门【" + sysDept.getDeptName() + "】下存在用户，不允许删除！");
       }
     }
-    // 执行删除
-    return this.deleteByIds(Ids);
+    // 执行删除 - 调用父类的批量删除方法
+    return baseMapper.deleteBatchIds(Arrays.asList(Ids));
   }
 
 

@@ -226,7 +226,7 @@ public class GenTableTenantServiceImpl
           String appPath = rootPath + File.separator + ".." + File.separator
             + ".." + File.separator + ".." + File.separator + ".." + File.separator
             + (StringUtils.contains(rootPath, "rattan-admin" + File.separator + "target") ? "" : ".." + File.separator)
-            + "plus-ui5.1" + File.separator;
+            + "open-wms-ui" + File.separator;
           // bbc后台
           if (ObjectUtil.isNotEmpty(genTableTenantBo.getVueType())
             && genTableTenantBo.getVueType().equals("bbc后台")) {

@@ -95,10 +95,9 @@ public class InventoryServiceImpl implements IInventoryService {
 
     //#region 入库统计数量
     List<String> statusList = List.of(
-      InOrderStatusEnum.IN_TRANSIT.getName(),
-      InOrderStatusEnum.SUCCESS.getName(),
-      InOrderStatusEnum.NEWED.getName(),
-      InOrderStatusEnum.PARTIAL_FINISHED.getName()
+      InOrderStatusEnum.IN_TRANSIT.getName(), // 在途中
+      InOrderStatusEnum.SUCCESS.getName(), // 审核成功
+      InOrderStatusEnum.PARTIAL_FINISHED.getName() // 部分交货
     );
     LambdaQueryWrapper<InOrder> inOrderLambdaQueryWrapper = new LambdaQueryWrapper<>();
     inOrderLambdaQueryWrapper.in(InOrder::getOrderStatus, statusList);
@@ -108,9 +107,10 @@ public class InventoryServiceImpl implements IInventoryService {
 
     //#region 出库统计数量
      statusList = List.of(
-      OutOrderStatusEnum.WAITING_MATCH.getName(),
-       OutOrderStatusEnum.PACKAGE_PARTIAL.getName(),
-       OutOrderStatusEnum.WAVE_FINISHED.getName()
+       OutOrderStatusEnum.PICKED.getName(), // 拣货完成
+       OutOrderStatusEnum.MATCHED.getName(), // 拣货完成
+       OutOrderStatusEnum.PACKAGE_PARTIAL.getName(), // 部分打包
+       OutOrderStatusEnum.WAVE_FINISHED.getName() // 波次完成
     );
     LambdaQueryWrapper<OutOrder> outOrderLambdaQueryWrapper = new LambdaQueryWrapper<>();
     outOrderLambdaQueryWrapper.in(OutOrder::getOrderStatus, statusList);
