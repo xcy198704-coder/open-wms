@@ -5,6 +5,14 @@ import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.yiruantong.common.core.enums.base.MenuEnum;
+import com.yiruantong.common.core.utils.StringUtils;
+import com.yiruantong.common.mybatis.core.dto.QueryBo;
+import com.yiruantong.common.mybatis.core.page.PageQuery;
+import com.yiruantong.common.mybatis.core.page.TableDataInfo;
+import com.yiruantong.common.mybatis.enums.DataTypeEnum;
+import com.yiruantong.common.mybatis.enums.QueryTypeEnum;
+import com.yiruantong.inbound.domain.in.vo.InOrderVo;
 import lombok.RequiredArgsConstructor;
 import com.yiruantong.basic.domain.base.BaseConsignor;
 import com.yiruantong.common.core.domain.R;
@@ -95,14 +103,30 @@ public class InventoryServiceImpl implements IInventoryService {
 
     //#region 入库统计数量
     List<String> statusList = List.of(
-      InOrderStatusEnum.IN_TRANSIT.getName(), // 在途中
-      InOrderStatusEnum.SUCCESS.getName(), // 审核成功
-      InOrderStatusEnum.PARTIAL_FINISHED.getName() // 部分交货
+      InOrderStatusEnum.IN_TRANSIT.getName(),
+      InOrderStatusEnum.SUCCESS.getName(),
+      InOrderStatusEnum.NEWED.getName(),
+      InOrderStatusEnum.PARTIAL_FINISHED.getName()
     );
-    LambdaQueryWrapper<InOrder> inOrderLambdaQueryWrapper = new LambdaQueryWrapper<>();
-    inOrderLambdaQueryWrapper.in(InOrder::getOrderStatus, statusList);
 
-    maps.put("inOrderCount", inOrderService.count(inOrderLambdaQueryWrapper));
+    PageQuery pageQuery= new PageQuery();
+    pageQuery.setMenuId(MenuEnum.MENU_1001.getId());
+    pageQuery.setPageIndex(1);
+    pageQuery.setPageSize(5);
+    pageQuery.setTableName("in_order");
+    pageQuery.setIsAsc("desc");
+    pageQuery.setPrefixRouter("/inbound/in/order");
+    pageQuery.setOrderByColumn("orderId");
+    pageQuery.setSumColumnNames(List.of());
+
+    QueryBo queryBo =new QueryBo();
+    queryBo.setValues(StringUtils.join(statusList, ","));
+    queryBo.setColumn("orderStatus");
+    queryBo.setDataType(DataTypeEnum.STRING);
+    queryBo.setQueryType(QueryTypeEnum.IN);
+    pageQuery.setQueryBoList(pageQuery.addQueryBo(queryBo));
+    TableDataInfo<InOrderVo> inOrderVoTableDataInfo = inOrderService.pageList(pageQuery);
+    maps.put("inOrderCount",inOrderVoTableDataInfo.getTotal());
     //#endregion
 
     //#region 出库统计数量
