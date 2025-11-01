@@ -847,7 +847,9 @@
 # 企业版WMS链接地址：[https://www.wms.kim/enterprise-wms](https://www.wms.kim/enterprise-wms/)
 ## 仓库3D可视化管理
 在3D可视化环境中，直接完成入库、出库、盘点及移位等所有操作皆可一键完成，实现可视、可知、可管的一体集成，管理从未如此直观高效。
-![输入图片说明](wms-3d-01.png)
+![输入图片说明](images/wms-3d-01.png)
+![输入图片说明](images/wms/wms-3d-02.png)
+![输入图片说明](images/wms/wms-3d-03.png)
 
 # QQ群
 <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=g035KL0OrSeWwWqxKmCDSkQgxGRA9PaW&authKey=Va2o57thdynX1XdLMvpkYPPiWAKrJc6gESRHPOwtAiGLW%2BrMqvB3iE6cH1LJ9s0X&noverify=0&group_code=835488048" target="_blank">点击链接加入群聊【易软通openWMS沟通群】</a>
