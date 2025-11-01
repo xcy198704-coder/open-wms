@@ -850,6 +850,8 @@
 ![输入图片说明](images/wms/wms-3d-01.png)
 ![输入图片说明](images/wms/wms-3d-02.png)
 ![输入图片说明](images/wms/wms-3d-03.png)
+![输入图片说明](images/wms/wms-3d-04.gif)
+![输入图片说明](images/wms/wms-3d-05.gif)
 
 # QQ群
 <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=g035KL0OrSeWwWqxKmCDSkQgxGRA9PaW&authKey=Va2o57thdynX1XdLMvpkYPPiWAKrJc6gESRHPOwtAiGLW%2BrMqvB3iE6cH1LJ9s0X&noverify=0&group_code=835488048" target="_blank">点击链接加入群聊【易软通openWMS沟通群】</a>
