@@ -44,7 +44,7 @@ server:
 # 日志配置
 logging:
   level:
-    com.yiruantong: @logging.level@
+    com.yiruantong: '@logging.level@'
     org.springframework: warn
     org.mybatis.spring.mapper: error
     com.yomahub.liteflow.parser.sql.util: error

@@ -39,6 +39,8 @@ import com.yiruantong.common.core.utils.*;
 import com.yiruantong.common.mail.utils.MailUtils;
 import com.yiruantong.common.mybatis.core.domain.bo.SaveEditorBo;
 import com.yiruantong.common.mybatis.core.domain.vo.EditorVo;
+import com.yiruantong.common.mybatis.core.dto.QueryBo;
+import com.yiruantong.common.mybatis.enums.QueryTypeEnum;
 import com.yiruantong.common.mybatis.core.page.PageQuery;
 import com.yiruantong.common.mybatis.core.page.TableDataInfo;
 import com.yiruantong.common.mybatis.core.service.ServiceImplPlus;
@@ -104,6 +106,18 @@ public class SysUserServiceImpl extends ServiceImplPlus<SysUserMapper, SysUser, 
    */
   @Override
   public void beforePageQuery(PageQuery pageQuery) {
+    List<QueryBo> queryBoList = pageQuery.getQueryBoList();
+    if (CollUtil.isNotEmpty(queryBoList)) {
+      queryBoList.stream()
+        .filter(queryBo -> StringUtils.equals(queryBo.getColumn(), "roleNames"))
+        .forEach(queryBo -> {
+          queryBo.setQueryType(QueryTypeEnum.EXISTS);
+          queryBo.setValues(StringUtils.format(
+            "SELECT 1 FROM sys_user_role sur WHERE sur.user_id = sys_user.user_id AND sur.role_id IN ({})",
+            queryBo.getValues()
+          ));
+        });
+    }
     SysDeptPostServiceImpl.treeQuery(pageQuery, deptMapper);
   }
   //#endregion

@@ -22,6 +22,11 @@ public enum UserCacheEnum {
    * 补货扫描 cache key
    */
   SCAN_REPLENISHMENT(2, "SCAN_REPLENISHMENT"),
+
+  /**
+   * 打包出库自定义 cache key
+   */
+  SCAN_OUT_CUSTOM_SCENES(3, "SCAN_OUT_CUSTOM_SCENES"),
   ;
 
   private final int id;
