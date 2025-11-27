@@ -117,6 +117,15 @@ public class SysUserServiceImpl extends ServiceImplPlus<SysUserMapper, SysUser, 
             queryBo.getValues()
           ));
         });
+      queryBoList.stream()
+        .filter(queryBo -> StringUtils.equals(queryBo.getColumn(), "postNames"))
+        .forEach(queryBo -> {
+          queryBo.setQueryType(QueryTypeEnum.EXISTS);
+          queryBo.setValues(StringUtils.format(
+            "SELECT 1 FROM sys_user_post sur WHERE sur.user_id = sys_user.user_id AND sur.post_id IN ({})",
+            queryBo.getValues()
+          ));
+        });
     }
     SysDeptPostServiceImpl.treeQuery(pageQuery, deptMapper);
   }
