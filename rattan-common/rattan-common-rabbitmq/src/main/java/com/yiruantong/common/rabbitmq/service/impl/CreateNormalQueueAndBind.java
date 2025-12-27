@@ -67,7 +67,7 @@ public class CreateNormalQueueAndBind {
       rabbitAdmin.declareBinding(binding);
       log.error("消息队列名{}，已发送消息完成", queueName);
     } else {
-      log.error("消息队列名{}不存在！", queueName);
+      log.info("消息队列名{}已存在！", queueName);
     }
   }
 }
