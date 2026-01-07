@@ -97,8 +97,18 @@ public class InScanValidationCmp extends NodeComponent {
         BigDecimal productStorage = coreInventoryService.getPositionStorage(inOrder.getStorageId(), positionName);
         BigDecimal maxCapacity = Optional.ofNullable(basePosition.getMaxCapacity()).orElse(BigDecimal.ZERO);
 
+        // 计算dataList中该货位的所有商品的扫描数量总和
+        BigDecimal totalFinishedQuantity = dataList.stream()
+          .filter(item -> positionName.equals(item.getPositionName()))
+          .map(InScanOrderDetailBo::getFinishedQuantity)
+          .filter(Objects::nonNull)
+          .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        // 当前库存数量 + 本次扫描数量总和
+        BigDecimal totalStorage = productStorage.add(totalFinishedQuantity);
+
         // 只有大于0才判断  验证入库数量是否大于货位最大容量
-        if (B.isGreater(Convert.toBigDecimal(maxCapacity)) && productStorage.compareTo(maxCapacity) > 0) {
+        if (B.isGreater(Convert.toBigDecimal(maxCapacity)) && totalStorage.compareTo(maxCapacity) > 0) {
           throw new ServiceException("货位：" + positionName + "入库数量已经超过货位最大数量，禁止入库！");
         }
       }
