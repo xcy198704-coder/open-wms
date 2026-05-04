@@ -70,7 +70,7 @@ public class HomeController extends BaseController {
    * 货位库存统计
    *
    * @param map 查询条件
-   * @return 返回查询数据
+   * @return 返回Map类型的查询数据
    */
   @PostMapping("/inventoryStatistics")
   public R<Map<String, Object>> inventoryStatistics(@RequestBody Map<String, Object> map) {
@@ -80,7 +80,7 @@ public class HomeController extends BaseController {
    * 库存商品类别
    *
    * @param map 查询条件
-   * @return 返回查询数据
+   * @return 返回Map类型的查询数据
    */
   @PostMapping("/inventoryProductType")
   public R<Map<String, Object>> inventoryProductType(@RequestBody Map<String, Object> map) {
