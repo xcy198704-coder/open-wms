@@ -868,7 +868,11 @@
 # QQ群1（已满）：835488048
 <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=g035KL0OrSeWwWqxKmCDSkQgxGRA9PaW&authKey=Va2o57thdynX1XdLMvpkYPPiWAKrJc6gESRHPOwtAiGLW%2BrMqvB3iE6cH1LJ9s0X&noverify=0&group_code=835488048" target="_blank">点击链接加入群聊【易软通openWMS沟通群】</a>
 <br/>
-# QQ群2：1080233217
+# QQ群2（已满）：1080233217
 <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=g035KL0OrSeWwWqxKmCDSkQgxGRA9PaW&authKey=Va2o57thdynX1XdLMvpkYPPiWAKrJc6gESRHPOwtAiGLW%2BrMqvB3iE6cH1LJ9s0X&noverify=0&group_code=1080233217" target="_blank">点击链接加入群聊【易软通openWMS沟通群】</a>
 <br/>
+# QQ群3：1126468485
+<a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=g035KL0OrSeWwWqxKmCDSkQgxGRA9PaW&authKey=Va2o57thdynX1XdLMvpkYPPiWAKrJc6gESRHPOwtAiGLW%2BrMqvB3iE6cH1LJ9s0X&noverify=0&group_code=1126468485" target="_blank">点击链接加入群聊【易软通openWMS沟通群】</a>
+<br/>
+
 <img src="images/qrcode_1768213429319.jpg" width="350px" />
