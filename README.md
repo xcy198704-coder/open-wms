@@ -875,4 +875,4 @@
 <a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=g035KL0OrSeWwWqxKmCDSkQgxGRA9PaW&authKey=Va2o57thdynX1XdLMvpkYPPiWAKrJc6gESRHPOwtAiGLW%2BrMqvB3iE6cH1LJ9s0X&noverify=0&group_code=1126468485" target="_blank">点击链接加入群聊【易软通openWMS沟通群】</a>
 <br/>
 
-<img src="images/qrcode_1768213429319.jpg" width="350px" />
+<img src="images/qrcode_1126468485.jpg" width="350px" />
