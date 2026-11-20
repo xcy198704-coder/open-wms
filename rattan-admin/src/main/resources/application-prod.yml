@@ -4,7 +4,7 @@ rattan:
   open-reg: false
 
 --- # 临时文件存储位置 避免临时文件被系统清理报错
-spring.servlet.multipart.location: /rattan/server/temp
+spring.servlet.multipart.location: ${RATTAN_TEMP_DIR:${java.io.tmpdir}}
 
 --- # 监控中心配置
 spring.boot.admin.client:
@@ -18,7 +18,8 @@ spring.boot.admin.client:
 
 --- # snail-job 配置
 snail-job:
-  enabled: true
+  # 生产默认关闭；需要分布式任务调度时置为 true 并部署 snail-job-server
+  enabled: ${SNAIL_JOB_ENABLED:false}
   # 需要在 SnailJob 后台组管理创建对应名称的组,然后创建任务的时候选择对应的组,才能正确分派任务
   group: "ruoyi_group"
   # SnailJob 接入验证令牌 详见 script/sql/snail_job.sql `sj_group_config` 表
@@ -50,17 +51,17 @@ spring:
           driverClassName: com.mysql.cj.jdbc.Driver
           # jdbc 所有参数配置参考 https://lionli.blog.csdn.net/article/details/122018562
           # rewriteBatchedStatements=true 批处理优化 大幅提升批量插入更新删除性能(对数据库有性能损耗 使用批量操作应考虑性能问题)
-          url: jdbc:mysql://127.0.0.1:3306/yrt-open-wms?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true&rewriteBatchedStatements=true
-          username: root
-          password: 123456
+          url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:yrt-open-wms}?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=${MYSQL_USE_SSL:false}&serverTimezone=GMT%2B8&autoReconnect=true&rewriteBatchedStatements=true
+          username: ${MYSQL_USERNAME:root}
+          password: ${MYSQL_PASSWORD:}
         # 从库数据源
         slave:
           lazy: true
           type: ${spring.datasource.type}
           driverClassName: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/yrt-open-wms?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true&rewriteBatchedStatements=true
-          username: root
-          password: 123456
+          url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:yrt-open-wms}?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=${MYSQL_USE_SSL:false}&serverTimezone=GMT%2B8&autoReconnect=true&rewriteBatchedStatements=true
+          username: ${MYSQL_USERNAME:root}
+          password: ${MYSQL_PASSWORD:}
       #        oracle:
       #          type: ${spring.datasource.type}
       #          driverClassName: oracle.jdbc.OracleDriver
@@ -103,13 +104,13 @@ spring:
 spring.data:
   redis:
     # 地址
-    host: 127.0.0.1
+    host: ${REDIS_HOST:127.0.0.1}
     # 端口，默认为6379
-    port: 6379
+    port: ${REDIS_PORT:6379}
     # 数据库索引
-    database: 0
+    database: ${REDIS_DATABASE:0}
     # 密码(如没有密码请注释掉)
-    password: 123456
+    password: ${REDIS_PASSWORD:}
     # 连接超时时间
     timeout: 10s
     # 是否开启ssl
@@ -197,11 +198,11 @@ sms:
 
 --- # rabbitmq消息队列 前段页面访问地址：http://139.224.226.81:15672/ 账号：rabbit，密码：123456
 spring.rabbitmq:
-  host: 127.0.0.1 # 主机名
-  port: 5672 # 端口
-  virtual-host: / # 虚拟主机（用户消息隔离）
-  username: rabbit # 用户名
-  password: 123456 # 密码
+  host: ${RABBITMQ_HOST:127.0.0.1} # 主机名
+  port: ${RABBITMQ_PORT:5672} # 端口
+  virtual-host: ${RABBITMQ_VIRTUAL_HOST:/} # 虚拟主机（用户消息隔离）
+  username: ${RABBITMQ_USERNAME:guest} # 用户名
+  password: ${RABBITMQ_PASSWORD:} # 密码
   connection-timeout: 15000   # 超时时间
   listener:
     simple:
@@ -310,3 +311,45 @@ liteflow:
     pollingStartSeconds: 0
     pollingIntervalSeconds: 120
   parse-mode: parse_one_on_first_exec
+
+--- # 生产安全加固
+# 关闭接口文档（生产环境不对外暴露 Swagger / api-docs）
+springdoc:
+  api-docs:
+    enabled: ${SPRINGDOC_ENABLED:false}
+  swagger-ui:
+    enabled: ${SPRINGDOC_ENABLED:false}
+
+# 仅暴露健康检查，避免 /actuator/env、/actuator/heapdump 等被公网访问
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+
+# 覆盖 application.yml 的免鉴权白名单：
+# 不再放行 Swagger 文档与 actuator 全路径，仅保留健康检查供探活使用
+security:
+  excludes:
+    - /*.html
+    - /**/*.html
+    - /**/*.css
+    - /**/*.js
+    - /favicon.ico
+    - /error
+    - /actuator/health
+
+--- # mongodb 链接（dev 里有、prod 之前遗漏，缺了会启动失败：连接串格式错误）
+mongo-plus:
+  data:
+    mongodb:
+      host: ${MONGO_HOST:127.0.0.1}
+      port: ${MONGO_PORT:27017}
+      database: ${MONGO_DATABASE:yrt-open-wms}
+      username: ${MONGO_USERNAME:}
+      password: ${MONGO_PASSWORD:}
+      authenticationDatabase: ${MONGO_AUTH_DATABASE:yrt-open-wms}
+      connectTimeoutMS: 50000
