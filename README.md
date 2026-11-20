@@ -876,3 +876,20 @@
 <br/>
 
 <img src="images/qrcode_1126468485.jpg" width="350px" />
+
+---
+
+# 关于本仓库（fork 说明）
+
+本仓库是 **易软通 openWMS 后端**（<https://gitee.com/yiruantong/open-wms>）的修改版本，
+遵循上游 Apache License 2.0，保留原始版权与署名。
+
+**上游作者 / 版权方：** 易软通（yiruantong）— https://gitee.com/yiruantong/open-wms
+
+**本 fork 的主要修改：**
+
+1. 关闭 p6spy 性能分析插件（`application-dev.yml`），避免每条 SQL 全量输出到控制台
+   拖慢接口响应；需要排查 SQL 时改回 `true` 并重新打包即可
+
+完整贡献者名单见 [CONTRIBUTORS.md](./CONTRIBUTORS.md)，许可证见 [LICENSE](./LICENSE)，
+修改声明见 [NOTICE](./NOTICE)。

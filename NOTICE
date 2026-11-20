@@ -1,0 +1,17 @@
+易软通开源 openWMS 后端（open-wms）
+
+Copyright 2024 易软通 (yiruantong)
+上游项目：https://gitee.com/yiruantong/open-wms
+
+This product includes software developed at 易软通 (https://gitee.com/yiruantong).
+
+本仓库是上游项目的修改版本（fork），主要修改内容：
+  1. 关闭 p6spy 性能分析插件（rattan-admin/src/main/resources/application-dev.yml），
+     避免每条 SQL 全量输出到控制台拖慢接口响应
+
+原作品采用 Apache License 2.0 授权，本修改版本同样以 Apache License 2.0 发布，
+许可证全文见本仓库 LICENSE 文件。修改内容与贡献者名单见 CONTRIBUTORS.md。
+
+说明：仓库中的 SnailJob 接入令牌、OAuth client-secret 等均为上游公开仓库
+（Gitee，Apache-2.0）自带的演示配置，其中 SnailJob 令牌由 script/sql/snail_job.sql
+种子数据定义，非生产凭据。
