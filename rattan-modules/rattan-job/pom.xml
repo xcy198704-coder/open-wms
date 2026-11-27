@@ -41,6 +41,19 @@
           <groupId>com.yiruantong</groupId>
           <artifactId>rattan-composite</artifactId>
       </dependency>
+
+      <!-- TMX 对接：只读客户端、字段映射、集成开关（同步/回写作业的底座）-->
+      <dependency>
+          <groupId>com.yiruantong</groupId>
+          <artifactId>rattan-basic</artifactId>
+      </dependency>
+
+      <!-- 测试基建（与 rattan-basic 同款）：作业编排的单测在这里跑 -->
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-test</artifactId>
+          <scope>test</scope>
+      </dependency>
   </dependencies>
 
 </project>

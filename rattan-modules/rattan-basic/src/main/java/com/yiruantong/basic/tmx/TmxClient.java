@@ -70,13 +70,31 @@ public class TmxClient {
 
   // ---------------------------------------------------------------- 读
 
-  /** 按关键字查料号摘要（分页）。 */
+  /** 按关键字查料号摘要（首页，limit 条）。等价于 {@code fetchPartsPage(kw, limit, "", "")}。 */
   public List<PartBrief> fetchParts(String kw, int limit) {
+    return fetchPartsPage(kw, limit, "", "").getParts();
+  }
+
+  /**
+   * 按关键字查一页料号摘要（游标分页 + 增量水位）。
+   *
+   * @param kw           料号/品名关键字（空 = 不限）
+   * @param limit        每页条数（TMX 侧上限 200）
+   * @param after        游标：上一页的 {@code nextAfter}（空 = 第一页）
+   * @param updatedSince 增量水位：只要 {@code updated_at >=} 它的料号（空 = 全量）；
+   *                     传 TMX 上次响应里的 {@code serverTime} 原值（两种时间格式都收）
+   */
+  public PartsPage fetchPartsPage(String kw, int limit, String after, String updatedSince) {
     Map<String, Object> params = new HashMap<>();
     params.put("q", kw == null ? "" : kw);
     params.put("limit", limit);
-    PartsEnvelope envelope = get(buildUrl(PARTS_PATH), params, PartsEnvelope.class);
-    return envelope.getParts() == null ? new ArrayList<>() : envelope.getParts();
+    if (after != null && !after.isBlank()) {
+      params.put("after", after);
+    }
+    if (updatedSince != null && !updatedSince.isBlank()) {
+      params.put("updated_since", updatedSince);
+    }
+    return get(buildUrl(PARTS_PATH), params, PartsEnvelope.class);
   }
 
   /** 查单个料号详情。 */
@@ -174,8 +192,7 @@ public class TmxClient {
 
   @Data
   @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-  static class PartsEnvelope implements Degradable {
-    private List<PartBrief> parts;
+  static class PartsEnvelope extends PartsPage implements Degradable {
     private Boolean degraded;
   }
 
