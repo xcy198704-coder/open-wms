@@ -443,6 +443,11 @@ public class CoreInventoryVo implements Serializable {
   private String caseNumber;
 
   /**
+   * 箱ID
+   */
+  private Long boxId;
+
+  /**
    * 包数
    */
   @ExcelProperty(value = "包数")

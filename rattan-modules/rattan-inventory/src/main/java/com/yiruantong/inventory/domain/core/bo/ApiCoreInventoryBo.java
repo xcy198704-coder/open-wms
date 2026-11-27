@@ -342,6 +342,11 @@ public class ApiCoreInventoryBo {
   private String caseNumber;
 
   /**
+   * 箱ID
+   */
+  private Long boxId;
+
+  /**
    * 货位类型
    */
   private Long positionType;

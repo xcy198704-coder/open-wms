@@ -310,5 +310,9 @@ public class OutOrderPickingDetailBo extends BaseEntity {
   @NotBlank(message = "集装箱号不能为空", groups = {AddGroup.class, EditGroup.class})
   private String containerNo;
 
+  /**
+   * 箱ID
+   */
+  private Long boxId;
 
 }

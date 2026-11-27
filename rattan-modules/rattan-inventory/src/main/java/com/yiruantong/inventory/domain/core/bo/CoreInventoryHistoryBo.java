@@ -331,6 +331,11 @@ public class CoreInventoryHistoryBo extends BaseEntity {
   private String caseNumber;
 
   /**
+   * 箱ID
+   */
+  private Long boxId;
+
+  /**
    * 仓库编号
    */
   @NotBlank(message = "仓库编号不能为空", groups = {AddGroup.class, EditGroup.class})

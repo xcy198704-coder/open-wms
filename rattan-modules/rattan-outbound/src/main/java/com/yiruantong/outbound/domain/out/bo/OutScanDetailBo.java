@@ -360,6 +360,16 @@ public class OutScanDetailBo {
   private String caseNumber;
 
   /**
+   * 箱ID（内箱）
+   */
+  private Long boxId;
+
+  /**
+   * 外箱ID
+   */
+  private Long outerBoxId;
+
+  /**
    * 包数 (湘钢)
    */
   @ExcelProperty(value = "包数")

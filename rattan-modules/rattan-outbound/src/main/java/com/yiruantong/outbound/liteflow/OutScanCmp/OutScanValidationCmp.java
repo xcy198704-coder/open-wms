@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import com.yiruantong.common.core.enums.base.HolderSourceTypeEnum;
 import com.yiruantong.common.core.enums.base.SortingStatusEnum;
 import com.yiruantong.common.core.utils.B;
+import com.yiruantong.common.core.utils.StringUtils;
 import com.yiruantong.inventory.service.core.ICoreInventoryHolderService;
 import com.yiruantong.outbound.domain.out.OutOrder;
 import com.yiruantong.outbound.domain.out.OutOrderDetail;
@@ -18,6 +19,8 @@ import com.yiruantong.outbound.service.out.IOutOrderDetailService;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @LiteflowComponent(id = "outScanValidationCmp", name = "2.出库扫描校验组件")
 @RequiredArgsConstructor
@@ -40,6 +43,10 @@ public class OutScanValidationCmp extends NodeComponent {
 
     HolderSourceTypeEnum holderSourceTypeEnum = HolderSourceTypeEnum.matchingEnum(outOrder.getOrderType());
     Assert.isFalse(holderSourceTypeEnum == null, "未找到出库单的枚举");
+    boolean boxScan = dataList.stream().anyMatch(x -> ObjectUtil.isNotNull(x.getBoxId()));
+    Map<String, BigDecimal> scanTotals = dataList.stream().collect(Collectors.groupingBy(
+      x -> x.getOrderDetailId() + "|" + StringUtils.defaultString(x.getBatchNumber()),
+      Collectors.reducing(BigDecimal.ZERO, OutScanDetailBo::getFinishedQuantity, BigDecimal::add)));
     for (OutScanDetailBo outScanDetailBo : dataList) {
       Long orderDetailId = outScanDetailBo.getOrderDetailId();
       OutOrderDetail outOrderDetail = outOrderDetailService.getById(orderDetailId);
@@ -61,7 +68,10 @@ public class OutScanValidationCmp extends NodeComponent {
           placeholderStorage = coreInventoryHolderService.getPlaceholderStorage(orderId, orderDetailId, outScanDetailBo.getBatchNumber(), holderSourceTypeEnum, HolderSourceTypeEnum.OUT_PICKING);
         }
       }
-      Assert.isFalse(!B.isEqual(placeholderStorage, outScanDetailBo.getFinishedQuantity()), outScanDetailBo.getBatchNumber() + "批次未找到可以占位的库存");
+      BigDecimal expectedQty = boxScan
+        ? scanTotals.getOrDefault(orderDetailId + "|" + StringUtils.defaultString(outScanDetailBo.getBatchNumber()), BigDecimal.ZERO)
+        : outScanDetailBo.getFinishedQuantity();
+      Assert.isFalse(!B.isEqual(placeholderStorage, expectedQty), outScanDetailBo.getBatchNumber() + "批次未找到可以占位的库存");
     }
   }
 }

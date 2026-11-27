@@ -84,7 +84,10 @@ public class InScanGenCheckCmp extends NodeComponent {
     // 明细处理
     for (InScanOrderDetailBo inScanOrderDetailBo : dataList) {
       // 获取入库单明细
-      InEnterDetail inEnterDetail = cxt.getInEnterDetailList().stream().filter(x -> StringUtils.equals(x.getProductCode(), inScanOrderDetailBo.getProductCode())).findFirst().orElse(null);
+      InEnterDetail inEnterDetail = cxt.getInEnterDetailList().stream()
+        .filter(x -> StringUtils.equals(x.getProductCode(), inScanOrderDetailBo.getProductCode())
+          && (ObjectUtil.isNull(inScanOrderDetailBo.getBoxId()) || ObjectUtil.equal(inScanOrderDetailBo.getBoxId(), x.getBoxId())))
+        .findFirst().orElse(null);
       Assert.isFalse(ObjectUtil.isNull(inEnterDetail), "入库明细不存在，生成质检单明细失败");
 
       BigDecimal finishedQuantity = inScanOrderDetailBo.getFinishedQuantity(); // 扫描完成的数量

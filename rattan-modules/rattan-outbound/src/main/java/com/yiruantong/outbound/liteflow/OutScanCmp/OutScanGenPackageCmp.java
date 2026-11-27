@@ -28,6 +28,7 @@ import com.yiruantong.inventory.service.core.ICoreInventoryHolderService;
 import com.yiruantong.inventory.service.core.ICoreInventoryService;
 import com.yiruantong.inventory.service.core.ICoreInventorySnService;
 import com.yiruantong.outbound.domain.operation.OutOrderWaveDetail;
+import com.yiruantong.outbound.domain.out.OutBoxCode;
 import com.yiruantong.outbound.domain.out.OutOrder;
 import com.yiruantong.outbound.domain.out.OutOrderDetail;
 import com.yiruantong.outbound.domain.out.OutPackage;
@@ -36,6 +37,7 @@ import com.yiruantong.outbound.domain.out.bo.OutScanDetailBo;
 import com.yiruantong.outbound.domain.out.bo.OutScanMainBo;
 import com.yiruantong.outbound.liteflow.Context.OutScanContext;
 import com.yiruantong.outbound.service.operation.IOutOrderWaveDetailService;
+import com.yiruantong.outbound.service.out.IOutBoxCodeService;
 import com.yiruantong.outbound.service.out.IOutOrderDetailService;
 import com.yiruantong.outbound.service.out.IOutPackageDetailService;
 import com.yiruantong.outbound.service.out.IOutPackageService;
@@ -53,6 +55,7 @@ public class OutScanGenPackageCmp extends NodeComponent {
   private final IOutPackageDetailService outPackageDetailService;
   private final IBaseProductService baseProductService;
   private final IOutOrderDetailService outOrderDetailService;
+  private final IOutBoxCodeService outBoxCodeService;
   private final ICoreInventoryHolderService coreInventoryHolderService;
   private final ICoreInventoryService coreInventoryService;
   private final IOutOrderWaveDetailService outOrderWaveDetailService;
@@ -123,6 +126,8 @@ public class OutScanGenPackageCmp extends NodeComponent {
       BeanUtil.copyProperties(productInfo, outPackageDetail);
       BeanUtil.copyProperties(outOrderDetail, outPackageDetail);
       BeanUtil.copyProperties(outScanDetailBo, outPackageDetail);
+      outPackageDetail.setBoxId(outScanDetailBo.getBoxId());
+      outPackageDetail.setOuterBoxId(outScanDetailBo.getOuterBoxId());
       outPackageDetail.setPackageId(outPackage.getPackageId());
       outPackageDetail.setPackageQuantity(finishedQuantity);
       outPackageDetail.setRowPackage(outScanDetailBo.getRowPackage());
@@ -228,6 +233,14 @@ public class OutScanGenPackageCmp extends NodeComponent {
       //#endregion
 
       outPackageDetailService.getBaseMapper().updateById(outPackageDetail); // 更新打包明细
+      if (ObjectUtil.isNotNull(outPackageDetail.getBoxId())) {
+        OutBoxCode box = new OutBoxCode();
+        box.setBoxId(outPackageDetail.getBoxId());
+        box.setPackageId(outPackage.getPackageId());
+        box.setPackageDetailId(outPackageDetail.getPackageDetailId());
+        box.setStatus("SHIPPED");
+        outBoxCodeService.updateById(box);
+      }
 
       // 消减SN处理
       if (B.isEqual(productInfo.getIsManageSn(), EnableEnum.ENABLE.getId())) {

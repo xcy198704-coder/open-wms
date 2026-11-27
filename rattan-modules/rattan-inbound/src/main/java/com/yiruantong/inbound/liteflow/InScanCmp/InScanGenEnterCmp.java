@@ -28,6 +28,8 @@ import com.yiruantong.inbound.domain.in.InOrderDetail;
 import com.yiruantong.inbound.domain.in.bo.InScanOrderBo;
 import com.yiruantong.inbound.domain.in.bo.InScanOrderDetailBo;
 import com.yiruantong.inbound.liteflow.Context.InScanContext;
+import com.yiruantong.inbound.domain.in.InBoxCode;
+import com.yiruantong.inbound.service.in.IInBoxCodeService;
 import com.yiruantong.inbound.service.in.IInEnterDetailService;
 import com.yiruantong.inbound.service.in.IInEnterService;
 import com.yiruantong.inbound.service.in.IInOrderDetailService;
@@ -48,6 +50,7 @@ public class InScanGenEnterCmp extends NodeComponent {
   private final IInEnterDetailService inEnterDetailService;
   private final IBaseProductService baseProductService;
   private final IBasePositionService basePositionService;
+  private final IInBoxCodeService inBoxCodeService;
 
   @Override
   public void process() {
@@ -167,6 +170,11 @@ public class InScanGenEnterCmp extends NodeComponent {
         inEnterDetail.setExpandFields(boExpandFields);
       }
 
+      // 箱实例ID：仅当扫描明细携带箱信息时写入，老流程为空不影响
+      if (ObjectUtil.isNotNull(inScanOrderDetailBo.getBoxId())) {
+        inEnterDetail.setBoxId(inScanOrderDetailBo.getBoxId());
+      }
+
       inEnterDetail.setEnterId(inEnter.getEnterId());
       inEnterDetail.setEnterQuantity(finishedQuantity);
       inEnterDetail.setRemark(inOrderDetail.getRemark());
@@ -205,6 +213,13 @@ public class InScanGenEnterCmp extends NodeComponent {
       inEnter.setRemark(inScanOrderDetailBo.getRemark());
       inEnterService.saveOrUpdate(inEnter);
       inEnterDetailService.save(inEnterDetail); // 保存入库单明细
+      if (ObjectUtil.isNotNull(inEnterDetail.getBoxId())) {
+        InBoxCode box = new InBoxCode();
+        box.setBoxId(inEnterDetail.getBoxId());
+        box.setEnterId(inEnter.getEnterId());
+        box.setEnterDetailId(inEnterDetail.getEnterDetailId());
+        inBoxCodeService.updateById(box);
+      }
       // 记录入库明细
       inEnterDetailList.add(inEnterDetail);
 

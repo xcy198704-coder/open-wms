@@ -364,6 +364,11 @@ public class InScanOrderDetailBo {
   private String caseNumber;
 
   /**
+   * 箱ID
+   */
+  private Long boxId;
+
+  /**
    * 包数
    */
   private BigDecimal parcelQuantity;

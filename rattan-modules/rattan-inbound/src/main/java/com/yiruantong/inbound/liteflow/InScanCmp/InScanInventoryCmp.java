@@ -91,7 +91,10 @@ public class InScanInventoryCmp extends NodeComponent {
       Assert.isFalse(B.isLessOrEqual(finishedQuantity), "扫描数量不能小于0");
 
       // 获取入库单明细
-      InEnterDetail inEnterDetail = ctx.getInEnterDetailList().stream().filter(x -> StringUtils.equals(x.getProductCode(), inScanOrderDetailBo.getProductCode())).findFirst().orElse(null);
+      InEnterDetail inEnterDetail = ctx.getInEnterDetailList().stream()
+        .filter(x -> StringUtils.equals(x.getProductCode(), inScanOrderDetailBo.getProductCode())
+          && (ObjectUtil.isNull(inScanOrderDetailBo.getBoxId()) || ObjectUtil.equal(inScanOrderDetailBo.getBoxId(), x.getBoxId())))
+        .findFirst().orElse(null);
       Assert.isFalse(ObjectUtil.isNull(inEnterDetail), "入库明细不存在，生成质检单明细失败");
 
       // 预到货明细信息

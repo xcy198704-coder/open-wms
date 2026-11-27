@@ -22,6 +22,7 @@ import com.yiruantong.inbound.domain.in.*;
 import com.yiruantong.inbound.domain.in.bo.InScanOrderBo;
 import com.yiruantong.inbound.domain.in.bo.InScanOrderDetailBo;
 import com.yiruantong.inbound.liteflow.Context.InScanContext;
+import com.yiruantong.inbound.service.in.IInBoxCodeService;
 import com.yiruantong.inbound.service.in.IInOrderDetailService;
 import com.yiruantong.inbound.service.in.IInShelveDetailService;
 import com.yiruantong.inbound.service.in.IInShelveDetailStepService;
@@ -39,6 +40,7 @@ public class InScanGenShelveCmp extends NodeComponent {
   private final IInShelveDetailService inShelveDetailService;
   private final IBasePositionService basePositionService;
   private final IInShelveDetailStepService inShelveDetailStepService;
+  private final IInBoxCodeService inBoxCodeService;
 
   @Override
   public void process() {
@@ -105,7 +107,10 @@ public class InScanGenShelveCmp extends NodeComponent {
       String productCode = inScanOrderDetailBo.getProductCode();
 
       // 获取入库单明细
-      InEnterDetail inEnterDetail = cxt.getInEnterDetailList().stream().filter(x -> StringUtils.equals(x.getProductCode(), inScanOrderDetailBo.getProductCode())).findFirst().orElse(null);
+      InEnterDetail inEnterDetail = cxt.getInEnterDetailList().stream()
+        .filter(x -> StringUtils.equals(x.getProductCode(), inScanOrderDetailBo.getProductCode())
+          && (ObjectUtil.isNull(inScanOrderDetailBo.getBoxId()) || ObjectUtil.equal(inScanOrderDetailBo.getBoxId(), x.getBoxId())))
+        .findFirst().orElse(null);
       Assert.isFalse(ObjectUtil.isNull(inEnterDetail), "入库明细不存在，生成质检单明细失败");
 
       BigDecimal finishedQuantity = inScanOrderDetailBo.getFinishedQuantity(); // 扫描完成的数量
@@ -152,6 +157,12 @@ public class InScanGenShelveCmp extends NodeComponent {
         }
 
         inShelveDetailService.save(inShelveDetail); // 保存上架单明细
+        if (ObjectUtil.isNotNull(inShelveDetail.getBoxId())) {
+          InBoxCode box = new InBoxCode();
+          box.setBoxId(inShelveDetail.getBoxId());
+          box.setShelveDetailId(inShelveDetail.getShelveDetailId());
+          inBoxCodeService.updateById(box);
+        }
         if (positionTypeEnumList.stream().anyMatch(a -> ObjectUtil.equals(a.getId(), basePosition.getPositionType()))) {
           //#region 生成上架明细步骤
           InShelveDetailStep inShelveDetailStep = new InShelveDetailStep();

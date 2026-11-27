@@ -287,6 +287,11 @@ public class CoreInventoryHistory extends TenantEntity {
   private String caseNumber;
 
   /**
+   * 箱ID
+   */
+  private Long boxId;
+
+  /**
    * 仓库编号
    */
   private String storageCode;

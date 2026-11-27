@@ -359,6 +359,11 @@ public class CoreInventoryHistoryVo implements Serializable {
   private String caseNumber;
 
   /**
+   * 箱ID
+   */
+  private Long boxId;
+
+  /**
    * 仓库编号
    */
   @ExcelProperty(value = "仓库编号")

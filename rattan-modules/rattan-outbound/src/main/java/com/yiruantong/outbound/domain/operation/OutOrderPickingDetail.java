@@ -266,5 +266,10 @@ public class OutOrderPickingDetail extends TenantEntity {
    */
   private String containerNo;
 
+  /**
+   * 箱ID
+   */
+  private Long boxId;
+
 
 }

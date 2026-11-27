@@ -420,6 +420,11 @@ public class InShelveDetailBo extends BaseEntity {
   private String caseNumber;
 
   /**
+   * 箱ID
+   */
+  private Long boxId;
+
+  /**
    * 包数
    */
   @NotNull(message = "包数不能为空", groups = {AddGroup.class, EditGroup.class})

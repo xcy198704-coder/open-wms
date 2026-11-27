@@ -180,6 +180,16 @@ public class OutPackageDetailBo extends BaseEntity {
     private String caseNumber;
 
       /**
+       * 箱ID（内箱）
+       */
+    private Long boxId;
+
+      /**
+       * 外箱ID
+       */
+    private Long outerBoxId;
+
+      /**
        * 单位毛重
        */
         @NotNull(message = "单位毛重不能为空", groups = { AddGroup.class, EditGroup.class })

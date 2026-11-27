@@ -360,6 +360,11 @@ public class InShelveDetail extends TenantEntity {
   private String caseNumber;
 
   /**
+   * 箱ID
+   */
+  private Long boxId;
+
+  /**
    * 包数
    */
   private Long parcelQuantity;

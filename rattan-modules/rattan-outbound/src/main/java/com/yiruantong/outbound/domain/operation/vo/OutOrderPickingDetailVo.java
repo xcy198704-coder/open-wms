@@ -333,5 +333,9 @@ public class OutOrderPickingDetailVo implements Serializable {
   @ExcelProperty(value = "集装箱号")
   private String containerNo;
 
+  /**
+   * 箱ID
+   */
+  private Long boxId;
 
 }

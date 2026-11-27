@@ -159,6 +159,16 @@ private static final long serialVersionUID=1L;
   private String caseNumber;
 
   /**
+   * 箱ID（内箱）
+   */
+  private Long boxId;
+
+  /**
+   * 外箱ID
+   */
+  private Long outerBoxId;
+
+  /**
    * 单位毛重
    */
   private BigDecimal weight;

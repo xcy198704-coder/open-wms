@@ -385,6 +385,11 @@ public class CommonDetailDto {
   private String caseNumber;
 
   /**
+   * 箱ID
+   */
+  private Long boxId;
+
+  /**
    * 质检状态
    */
   @ExcelProperty(value = "质检状态")
