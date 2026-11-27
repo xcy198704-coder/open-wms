@@ -492,3 +492,11 @@ GROUP BY r.type_name,m.type_name ORDER BY FIELD(r.type_name,'成品','原材料'
 -- DELETE s FROM base_box_spec s WHERE s.create_by_name='系统导入';
 -- DELETE FROM base_product WHERE create_by_name='系统导入' AND tenant_id='000000';
 -- DELETE FROM base_product_type WHERE type_code LIKE 'BOM-%';
+--
+-- 2026-11-27 补充（TMX 对接后）：「系统导入」标记同时被同步作业（Task 4/8）使用，
+-- 回滚时以上三条会把人工导入与同步作业的落库一起撤——这是有意的（同标记同源）。
+-- 同步相关的附加清理（水位、开关）与两级回滚的完整步骤见
+-- script/tmx_sync_verify.md 第 4 节与 script/tmx_sync_verify.sql 回滚段：
+--   DELETE FROM sys_config WHERE config_key='tmx_syncWatermark';
+--   UPDATE sys_config SET config_value='0' WHERE config_key IN ('tmx_syncEnable','tmx_boxSpecEnable');
+-- 水位不清 = 下次同步从旧水位继续，重跑不完整——回滚必带。
