@@ -33,6 +33,10 @@
     <spring-boot-admin.version>3.2.3</spring-boot-admin.version>
     <redisson.version>3.23.4</redisson.version>
     <lock4j.version>2.2.7</lock4j.version>
+    <!-- 单测总开关：默认 true = 与历史一致不跑测试；按需 -DskipTests=false 打开 -->
+    <skipTests>true</skipTests>
+    <!-- 单测标签过滤：默认与 profiles.active 一致（保持既有行为）；-Dtest.groups= 可放行全部 -->
+    <test.groups>${profiles.active}</test.groups>
     <dynamic-ds.version>4.3.1</dynamic-ds.version>
     <alibaba-ttl.version>2.14.2</alibaba-ttl.version>
     <snailjob.version>1.1.2</snailjob.version>
@@ -465,11 +469,11 @@
         <version>${maven-surefire-plugin.version}</version>
         <configuration>
           <!-- 根据打包环境执行对应的@Tag测试方法 -->
-          <groups>${profiles.active}</groups>
+          <groups>${test.groups}</groups>
           <!-- 排除标签 -->
           <excludedGroups>exclude</excludedGroups>
-          <!-- 忽略测试 -->
-          <skipTests>true</skipTests>
+          <!-- 忽略测试：默认 true（保持既有行为）；需要跑单测时显式 -DskipTests=false -->
+          <skipTests>${skipTests}</skipTests>
         </configuration>
       </plugin>
       <!-- 统一版本号管理 -->
