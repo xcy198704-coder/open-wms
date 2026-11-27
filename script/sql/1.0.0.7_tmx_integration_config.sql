@@ -8,7 +8,7 @@
 -- 纪律：
 --   * 全脚本幂等，可重复执行（与 1.0.0.4 同款写法）。
 --   * 两个开关默认 0：升级后不改变现有任何流程；开关关闭时行为与今天逐字节一致。
---   * 共 8 个键：2 开关 + 3 连接参数 + 1 服务账号口令 + 1 水位。
+--   * 共 9 个键：3 开关（同步/回写/箱规）+ 3 连接参数 + 1 服务账号口令 + 1 水位 + 1 箱规开关。
 --   * config_type = 'N' 表示非系统内置，允许在「系统参数」界面维护。
 --   * **令牌值不进 Git**：本脚本只建空值，真实令牌由现场在系统参数界面填写
 --     （或按站点策略改走环境变量，见 TmxIntegrationConfig 注释）。
@@ -80,6 +80,15 @@ WHERE NOT EXISTS (SELECT 1 FROM `sys_config` WHERE `config_key` = 'tmx_syncWater
 
 SELECT `config_key`, `config_name`, `config_value`
 FROM `sys_config`
-WHERE `config_key` IN ('tmx_syncEnable','tmx_writebackEnable','tmx_baseUrl','tmx_token','tmx_username',
+WHERE `config_key` IN ('tmx_syncEnable','tmx_writebackEnable','tmx_boxSpecEnable','tmx_baseUrl','tmx_token','tmx_username',
                        'tmx_password','tmx_timeoutMs','tmx_syncWatermark')
 ORDER BY `config_key`;
+
+-- ---------------------------------------------------------------------------
+-- 5) 箱规自动生成开关（Task 8，2026-11-27 追加；默认 0）
+--    独立开关：箱规直接改作业底数，与主数据同步分开灰度
+-- ---------------------------------------------------------------------------
+
+INSERT INTO `sys_config` (`tenant_id`, `config_name`, `config_key`, `config_value`, `config_type`, `create_by`, `create_time`, `create_by_name`)
+SELECT '000000', 'TMX 箱规自动生成开关（0=关 1=开）', 'tmx_boxSpecEnable', '0', 'N', 1, NOW(), '超级管理员' FROM DUAL
+WHERE NOT EXISTS (SELECT 1 FROM `sys_config` WHERE `config_key` = 'tmx_boxSpecEnable');

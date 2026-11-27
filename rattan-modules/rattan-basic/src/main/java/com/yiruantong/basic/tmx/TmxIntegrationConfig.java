@@ -42,6 +42,11 @@ public class TmxIntegrationConfig {
     return sysConfigService.getConfigBool("tmx_writebackEnable");
   }
 
+  /** 箱规自动生成开关（Task 8；独立开关——箱规直接改作业底数，与主数据同步分开灰度） */
+  public boolean isBoxSpecEnabled() {
+    return sysConfigService.getConfigBool("tmx_boxSpecEnable");
+  }
+
   /** 任一开关开着（页面/作业用来判断是否需要暴露 TMX 入口） */
   public boolean isAnyEnabled() {
     return isSyncEnabled() || isWritebackEnabled();

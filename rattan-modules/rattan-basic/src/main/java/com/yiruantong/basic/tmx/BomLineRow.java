@@ -16,6 +16,15 @@ public class BomLineRow {
 
   private String childPartNo;
 
+  /**
+   * 子件名称（TMX 侧待补字段 {@code child_part_name}，2026-11-27 已向 TMX 提出）。
+   *
+   * <p>**箱规自动生成的关键输入**：实测 16 个有包装行的产品全是 4~8 条包材行，
+   * 纸盒/纸箱（真箱）与缓冲垫/EPE/尼龙袋（辅材）只靠名称能区分——没有这个字段时
+   * 多包装行产品一律进例外清单，不猜（见 {@code BoxStructureResolver}）。
+   */
+  private String childPartName;
+
   /** 用量原文，如 "1/16"、"4"、"2PCS" */
   private String qtyText;
 
